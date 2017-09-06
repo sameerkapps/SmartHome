@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SmartHomeApp"
+             xmlns:vm="clr-namespace:HomeMonitor.ViewModels"
+             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms" 
+             x:Class="SmartHomeApp.MainPage">
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel></vm:MainPageViewModel>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <chart:SfChart Grid.Row="0" Margin="5">
+              <chart:SfChart.Title>
+                <chart:ChartTitle Text="Home Temperature"/>  
+            </chart:SfChart.Title>
+            <chart:SfChart.PrimaryAxis>
+                <chart:DateTimeAxis>
+                    <chart:DateTimeAxis.Title>
+                        <chart:ChartAxisTitle Text="Time"> </chart:ChartAxisTitle>
+                    </chart:DateTimeAxis.Title>
+                </chart:DateTimeAxis>            
+            </chart:SfChart.PrimaryAxis>
+            <chart:SfChart.SecondaryAxis>
+                <chart:NumericalAxis>
+                    <chart:NumericalAxis.Title>
+                        <chart:ChartAxisTitle Text="Temperature"> </chart:ChartAxisTitle>
+                    </chart:NumericalAxis.Title>                    
+                </chart:NumericalAxis>
+            </chart:SfChart.SecondaryAxis>
+            <chart:SfChart.Series>
+              <chart:LineSeries ItemsSource="{Binding WeatherData}" XBindingPath="Time" YBindingPath="Temperature">
+             </chart:LineSeries>
+          </chart:SfChart.Series>            
+        </chart:SfChart>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>   
+                <ColumnDefinition Width="*"/>  
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" HorizontalOptions="Center" Text="Get" Command="{Binding RetrieveWeatherData}"/>
+            <Switch Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" IsToggled="{Binding IsLEDOn}"/>
+        </Grid>
+    </Grid>
+
+</ContentPage>
